@@ -18,4 +18,4 @@ It’s a web app that lets you **browse weapons, enemies, creatures, and equipme
 ## How to try it
 1. Clone this repo  
    ```bash
-   git clone https://github.com/your-username/hyrule-compendium.git
+   git clone https://github.com/carmoyma/hyrule-compendium.git
