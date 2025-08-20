@@ -123,7 +123,20 @@ function showEntryDetails(entry) {
             extraList.appendChild(li);
         }
     } else if (category === "treasure") {
-        if (entry.drops && entry.drops.length > 0) {
+        const chestContents = [
+            "Weapons → Swords, Spears, Two-Handed Weapons",
+            "Shields → Wooden, Metal, Guardian Shields",
+            "Bows → Traveler's Bow, Soldier's Bow, Royal Bow",
+            "Arrows → Fire Arrows, Ice Arrows, Bomb Arrows",
+            "Armor → Tunics, Trousers, Boots, Circlets",
+            "Materials → Gems (Amber, Ruby, Sapphire, Diamond), Ancient Parts",
+            "Food → Cooked Meals, Elixirs",
+            "Rupees → Green (1), Blue (5), Red (20), Purple (50), Silver (100), Gold (300)",
+            "Key Items → Special quest items, Maps, or Rare Treasures"
+        ];
+
+        if (entry.drops && entry.drops.length > 0 && entry.name.toLowerCase() !== "treasure chest") {
+            // Mostrar drops reales del cofre
             entry.drops.forEach(drop => {
                 const li = document.createElement("li");
                 li.textContent = drop
@@ -133,9 +146,12 @@ function showEntryDetails(entry) {
                 extraList.appendChild(li);
             });
         } else {
-            const li = document.createElement("li");
-            li.textContent = "Does not contain any items.";
-            extraList.appendChild(li);
+            // Mostrar lista genérica de posibles contenidos
+            chestContents.forEach(content => {
+                const li = document.createElement("li");
+                li.textContent = content;
+                extraList.appendChild(li);
+            });
         }
     }else if (category === "materials") {
         function renderHeartsSVG(hearts) {
