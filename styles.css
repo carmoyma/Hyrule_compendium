@@ -1,0 +1,342 @@
+/* ====== FILTROS ====== */
+#filters {
+    display: flex;
+    justify-content: center;   /* Centrar horizontalmente */
+    align-items: center;       /* Alinear verticalmente */
+    flex-wrap: wrap;           /* Permitir que salten a otra línea si no caben */
+    gap: 12px;                 /* Espacio entre botones */
+    margin: 20px auto;
+    max-width: 90%;
+}
+
+#filters button {
+    background-color: #292929;
+    border: 2px solid #ffcc00;
+    color: #ffcc00;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+#filters button:hover {
+    background-color: #ffcc00;
+    color: #292929;
+    transform: scale(1.05);
+}
+
+/* Botón activo */
+#filters button.active {
+    background-color: #ffcc00;
+    color: #292929;
+}
+
+
+/* ====== PAGINACIÓN ESTILIZADA ====== */
+#pagination {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-family: 'Uncial Antiqua', 'MedievalSharp', fantasy, serif;
+}
+
+#pagination button {
+    background-color: #ffcc00;
+    color: #292929;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#pagination button:hover {
+    background-color: #e6b800;
+    transform: scale(1.05);
+}
+
+#pagination button.active {
+    background-color: #292929;
+    color: #ffcc00;
+    transform: scale(1.1);
+}
+
+#pagination span {
+    color: #ffcc00;
+    font-size: 18px;
+    user-select: none;
+    padding: 0 4px;
+}
+
+
+/* ====== INPUT DE BÚSQUEDA ====== */
+#search-bar {
+    width: 80%;
+    max-width: 400px;
+    padding: 10px;
+    margin: 20px auto;
+    display: block;
+    border: 2px solid #ffcc00;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #1e1e1e;
+    color: white;
+    outline: none;
+    transition: box-shadow 0.2s ease;
+}
+
+#search-bar:focus {
+    box-shadow: 0 0 8px #ffcc00;
+}
+
+/* Listado de entradas (antes enemy-list) */
+#entry-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 220px)); /* tarjetas fijas de 220px */
+    justify-content: center; /* centra las filas incompletas */
+    gap: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 10px;
+}
+@media (max-width: 1200px) {
+    #entry-list {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 180px));
+    }
+}
+
+@media (max-width: 800px) {
+    #entry-list {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 150px));
+    }
+}
+
+@media (max-width: 500px) {
+    #entry-list {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 120px));
+    }
+}
+
+
+.entry-card {
+    background-color: #292929;        
+    border-radius: 10px;              
+    overflow: hidden;
+    text-align: center;
+    padding: 10px;                    
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(255, 204, 0, 0.2);
+    height: auto;                    
+    min-height: 250px;                
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;      
+    border: 2px solid transparent; /* 👈 borde siempre, invisible al inicio */
+}
+
+.entry-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 16px rgba(255, 204, 0, 0.4);
+    border-color: #ffcc00; /* 👈 solo cambia el color */
+}
+
+
+.entry-card img {
+    width: 100%;
+    height: 150px;                     
+    object-fit: cover;
+    border-bottom: 2px solid #ffcc00;  /* borde dorado */
+    margin-bottom: 10px;               
+}
+
+.entry-card p {
+    margin: 0;                         
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffcc00;
+    text-transform: capitalize;
+    font-family: 'Uncial Antiqua', 'MedievalSharp', fantasy, serif;
+    letter-spacing: 1px;
+}
+
+body {
+    background: url('img/fondo.jpg') repeat;
+    background-position: top left;
+    color: #ffcc00;
+}
+
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5); /* oscurece la imagen */
+    z-index: -1;
+}
+
+body h1 {
+    font-family: 'Uncial Antiqua', 'MedievalSharp', fantasy, serif;
+    font-size: 48px;
+    text-align: center;
+    color: #ffcc00;
+    margin-top: 30px;
+    text-shadow: 2px 2px 4px #292929;
+}
+
+body p {
+    font-family: 'Uncial Antiqua', 'MedievalSharp', fantasy, serif;
+    font-size: 18px;
+    text-align: center;
+    color: #ffcc00;
+    margin-bottom: 20px;
+}
+/* Contenedor de partículas */
+#particle-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+/* Cada partícula */
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 204, 0, 0.7);
+    border-radius: 50%;
+    animation: float 6s linear infinite;
+}
+
+/* Animación */
+@keyframes float {
+    0% { transform: translateY(100vh) translateX(0) scale(1); opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-10vh) translateX(30px) scale(0.8); opacity: 0; }
+}
+/* ====== DETALLE DE ENTRADA ====== */
+#entry-details {
+    max-width: 900px;
+    margin: 50px auto;
+    background: rgba(41, 41, 41, 0.8);  /* más oscuro para mejor contraste */
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);  /* efecto cristal */
+    border: 2px solid #ffcc00;
+}
+
+#entry-name {
+    text-transform: capitalize; /* pone la primera letra de cada palabra en mayúscula */
+    font-family: 'Uncial Antiqua', 'MedievalSharp', fantasy, serif;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #ffcc00;
+    text-shadow: 2px 2px 5px #000;
+}
+#entry-extra li {
+    text-transform: capitalize;  /* primera letra de cada palabra en mayúscula */
+    font-family: 'Uncial Antiqua', 'MedievalSharp', fantasy, serif;
+    color: #ffcc00;
+    margin-bottom: 6px;
+    font-size: 16px;
+}
+.heart {
+    color: red;
+    display: inline-block;
+    font-size: 1.2em;
+    margin-right: 2px;
+}
+
+.half-heart {
+    display: inline-block;
+    position: relative;
+    width: 0.6em; /* ancho del medio corazón */
+    overflow: hidden;
+}
+
+.half-heart::before {
+    content: "♥";
+    position: absolute;
+    left: 0;
+    width: 1.2em; /* mismo tamaño que un corazón completo */
+}
+
+
+#entry-description {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    text-align: justify;
+    margin-bottom: 25px;
+    color: #ffcc00;
+}
+
+
+#entry-image {
+    display: block;
+    margin: 0 auto 20px auto;
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #ffcc00;
+    border-radius: 10px;
+}
+
+#entry-extra {
+    list-style: square;
+    padding-left: 20px;
+}
+
+#entry-extra li {
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+#go-back-btn {
+    display: block;
+    margin: 30px auto 0 auto;
+    padding: 10px 25px;
+    background-color: #292929;
+    color: #ffcc00;
+    border: 2px solid #ffcc00;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#go-back-btn:hover {
+    background-color: #ffcc00;
+    color: #292929;
+    transform: scale(1.05);
+}
+
+
+/* Responsive */
+@media (max-width: 600px) {
+    #entry-details {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    #entry-name {
+        font-size: 2rem;
+    }
+
+    #entry-description {
+        font-size: 1rem;
+    }
+}

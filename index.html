@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyrule Compendium</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <h1>Hyrule Compendium</h1>
+    <p>Select a category or search to explore entries.</p>
+
+    <!-- Filtros -->
+    <div id="filters">
+        <button onclick="filterByCategory('all')">All</button>
+        <button onclick="filterByCategory('monsters')">Enemies</button>
+        <button onclick="filterByCategory('creatures')">Creatures</button>
+        <button onclick="filterByCategory('materials')">Materials</button>
+        <button onclick="filterByCategory('treasure')">Treasures</button>
+        <button onclick="filterByCategory('equipment')">Equipment</button>
+
+    </div>
+
+    <!-- Buscador -->
+    <input 
+      type="text" 
+      id="search-bar" 
+      placeholder="Search the compendium..." 
+      oninput="filterEntries()" 
+    />
+
+    <!-- Listado -->
+    <div id="entry-list">
+        <p>Loading entries...</p>
+    </div>
+    <div id="particle-bg">
+        <div class="particle" style="left: 10%; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 35%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 85%; animation-delay: 5s;"></div>
+    </div>
+
+    <div id="pagination"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
