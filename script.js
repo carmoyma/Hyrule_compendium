@@ -1,4 +1,4 @@
-// API Endpoint para todo el compendio
+// API Endpoint
 const API_URL = "https://botw-compendium.herokuapp.com/api/v3/compendium/all";
 
 let allEntries = [];
@@ -8,22 +8,15 @@ const entriesPerPage = 10;
 
 // Cargar todos los datos del compendio
 function loadEntries() {
-    console.log("Fetching compendium...");
-
     fetch(API_URL)
         .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
             return response.json();
         })
         .then(data => {
-            if (!data || !data.data) {
-                throw new Error("No data found in API response.");
-            }
-
+            if (!data?.data) throw new Error("No data found in API response.");
             allEntries = data.data;
-            filterEntries(); // mostrar por primera vez
+            filterEntries();
         })
         .catch(error => {
             console.error("Error fetching entries:", error);
@@ -42,7 +35,6 @@ function displayEntries(entries) {
         return;
     }
 
-    // Calcular índices de la página
     const start = (currentPage - 1) * entriesPerPage;
     const end = start + entriesPerPage;
     const paginatedEntries = entries.slice(start, end);
@@ -63,6 +55,7 @@ function displayEntries(entries) {
     renderPagination(entries.length);
 }
 
+// Renderizar paginación
 function renderPagination(totalEntries) {
     const pagination = document.getElementById("pagination");
     pagination.innerHTML = "";
@@ -70,118 +63,78 @@ function renderPagination(totalEntries) {
     const totalPages = Math.ceil(totalEntries / entriesPerPage);
     if (totalPages <= 1) return;
 
-    // Botón "Prev"
-    if (currentPage > 1) {
-        const prev = document.createElement("button");
-        prev.textContent = "Prev";
-        prev.onclick = () => { currentPage--; filterEntries(); };
-        pagination.appendChild(prev);
-    }
+    const createBtn = (text, callback, active = false) => {
+        const btn = document.createElement("button");
+        btn.textContent = text;
+        if (active) btn.classList.add("active");
+        btn.addEventListener("click", callback);
+        return btn;
+    };
+
+    if (currentPage > 1) pagination.appendChild(createBtn("Prev", () => { currentPage--; filterEntries(); }));
 
     const pageRange = 5;
     let startPage = Math.max(1, currentPage - Math.floor(pageRange / 2));
     let endPage = Math.min(totalPages, startPage + pageRange - 1);
     startPage = Math.max(1, endPage - pageRange + 1);
 
-    // Primera página + puntos suspensivos si no está en rango
     if (startPage > 1) {
-        const firstBtn = document.createElement("button");
-        firstBtn.textContent = "1";
-        firstBtn.onclick = () => { currentPage = 1; filterEntries(); };
-        pagination.appendChild(firstBtn);
-
-        if (startPage > 2) {
-            const dots = document.createElement("span");
-            dots.textContent = "…";
-            dots.style.margin = "0 5px";
-            pagination.appendChild(dots);
-        }
+        pagination.appendChild(createBtn("1", () => { currentPage = 1; filterEntries(); }));
+        if (startPage > 2) pagination.appendChild(Object.assign(document.createElement("span"), { textContent: "…", style: "margin:0 5px;" }));
     }
 
-    // Botones de páginas cercanas
     for (let i = startPage; i <= endPage; i++) {
-        const pageBtn = document.createElement("button");
-        pageBtn.textContent = i;
-        if (i === currentPage) pageBtn.classList.add("active");
-        pageBtn.onclick = () => { currentPage = i; filterEntries(); };
-        pagination.appendChild(pageBtn);
+        pagination.appendChild(createBtn(i, () => { currentPage = i; filterEntries(); }, i === currentPage));
     }
 
-    // Última página + puntos suspensivos si no está en rango
     if (endPage < totalPages) {
-        if (endPage < totalPages - 1) {
-            const dots = document.createElement("span");
-            dots.textContent = "…";
-            dots.style.margin = "0 5px";
-            pagination.appendChild(dots);
-        }
-
-        const lastBtn = document.createElement("button");
-        lastBtn.textContent = totalPages;
-        lastBtn.onclick = () => { currentPage = totalPages; filterEntries(); };
-        pagination.appendChild(lastBtn);
+        if (endPage < totalPages - 1) pagination.appendChild(Object.assign(document.createElement("span"), { textContent: "…", style: "margin:0 5px;" }));
+        pagination.appendChild(createBtn(totalPages, () => { currentPage = totalPages; filterEntries(); }));
     }
 
-    // Botón "Next"
-    if (currentPage < totalPages) {
-        const next = document.createElement("button");
-        next.textContent = "Next";
-        next.onclick = () => { currentPage++; filterEntries(); };
-        pagination.appendChild(next);
-    }
+    if (currentPage < totalPages) pagination.appendChild(createBtn("Next", () => { currentPage++; filterEntries(); }));
 }
-
-
-
 
 // Filtrar por categoría y búsqueda
 function filterEntries() {
     const query = document.getElementById("search-bar").value.toLowerCase();
-
     let filtered = allEntries;
 
-    if (currentCategory !== "all") {
-        filtered = filtered.filter(entry => entry.category === currentCategory);
-    }
-
-    if (query) {
-        filtered = filtered.filter(entry => entry.name.toLowerCase().includes(query));
-    }
+    if (currentCategory !== "all") filtered = filtered.filter(entry => entry.category === currentCategory);
+    if (query) filtered = filtered.filter(entry => entry.name.toLowerCase().includes(query));
 
     displayEntries(filtered);
 }
 
-// Filtros por botones
+// Filtrar por categoría
 function filterByCategory(category) {
     currentCategory = category;
     currentPage = 1;
-
-    // Guardar en localStorage
     localStorage.setItem("activeFilter", category);
 
-    // Quitar la clase activa de todos los botones
     document.querySelectorAll("#filters button").forEach(btn => btn.classList.remove("active"));
-
-    // Añadir la clase activa al botón actual
-    const activeBtn = [...document.querySelectorAll("#filters button")]
-        .find(btn => btn.textContent.toLowerCase().includes(category === "all" ? "all" : category));
+    const activeBtn = [...document.querySelectorAll("#filters button")].find(btn => btn.dataset.category === category);
     if (activeBtn) activeBtn.classList.add("active");
 
     filterEntries();
 }
 
-
-
-// Cargar entradas al iniciar
-// Cargar entradas al iniciar
+// Inicialización al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
     loadEntries();
 
-    // Recuperar el último filtro guardado
+    // Recuperar último filtro guardado
     const savedFilter = localStorage.getItem("activeFilter");
-    if (savedFilter) {
-        currentCategory = savedFilter;
-        filterByCategory(savedFilter);
-    }
-});
+    if (savedFilter) currentCategory = savedFilter;
 
+    // Asignar eventos a botones de filtro
+    document.querySelectorAll("#filters button").forEach(btn => {
+        btn.addEventListener("click", () => filterByCategory(btn.dataset.category));
+    });
+
+    // Asignar evento al buscador
+    document.getElementById("search-bar").addEventListener("input", filterEntries);
+
+    // Aplicar filtro inicial
+    filterByCategory(currentCategory);
+});

@@ -117,6 +117,10 @@ function showEntryDetails(entry) {
             li = document.createElement("li");
             li.textContent = "Elemental Damage: None";
             extraList.appendChild(li);
+        }else if (name.includes("master")) {
+            li = document.createElement("li");
+            li.textContent = "Near ganon creatures and guardians → Attack: 60";
+            extraList.appendChild(li);
         }
     } else if (category === "treasure") {
         if (entry.drops && entry.drops.length > 0) {
