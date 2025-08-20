@@ -139,13 +139,13 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;      
-    border: 2px solid transparent; /* 👈 borde siempre, invisible al inicio */
+    border: 2px solid transparent; 
 }
 
 .entry-card:hover {
     transform: translateY(-8px) scale(1.03);
     box-shadow: 0 8px 16px rgba(255, 204, 0, 0.4);
-    border-color: #ffcc00; /* 👈 solo cambia el color */
+    border-color: #ffcc00; 
 }
 
 
@@ -153,7 +153,7 @@
     width: 100%;
     height: 150px;                     
     object-fit: cover;
-    border-bottom: 2px solid #ffcc00;  /* borde dorado */
+    border-bottom: 2px solid #ffcc00;  
     margin-bottom: 10px;               
 }
 
@@ -179,7 +179,7 @@ body::before {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5); /* oscurece la imagen */
+    background: rgba(0,0,0,0.5); 
     z-index: -1;
 }
 
@@ -231,11 +231,11 @@ body p {
 #entry-details {
     max-width: 900px;
     margin: 50px auto;
-    background: rgba(41, 41, 41, 0.8);  /* más oscuro para mejor contraste */
+    background: rgba(41, 41, 41, 0.8);  
     padding: 25px 30px;
     border-radius: 15px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.8);
-    backdrop-filter: blur(5px);  /* efecto cristal */
+    backdrop-filter: blur(5px);  
     border: 2px solid #ffcc00;
 }
 
@@ -254,26 +254,6 @@ body p {
     color: #ffcc00;
     margin-bottom: 6px;
     font-size: 16px;
-}
-.heart {
-    color: red;
-    display: inline-block;
-    font-size: 1.2em;
-    margin-right: 2px;
-}
-
-.half-heart {
-    display: inline-block;
-    position: relative;
-    width: 0.6em; /* ancho del medio corazón */
-    overflow: hidden;
-}
-
-.half-heart::before {
-    content: "♥";
-    position: absolute;
-    left: 0;
-    width: 1.2em; /* mismo tamaño que un corazón completo */
 }
 
 
